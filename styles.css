@@ -1,18 +1,31 @@
+/* Estilos optimizados para iPhone - Responsive Mobile First */
+
+/* Reset y variables para iPhone */
+:root {
+    --safe-area-top: env(safe-area-inset-top, 20px);
+    --safe-area-bottom: env(safe-area-inset-bottom, 20px);
+    --safe-area-left: env(safe-area-inset-left, 0px);
+    --safe-area-right: env(safe-area-inset-right, 0px);
+}
+
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    user-select: none;
 }
 
 body {
-    font-family: 'Poppins', sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
     background: linear-gradient(135deg, #ff6b6b, #ff8e8e, #ffa8a8);
     min-height: 100vh;
     overflow-x: hidden;
     position: relative;
+    padding-top: var(--safe-area-top);
+    padding-bottom: var(--safe-area-bottom);
 }
 
-/* Background Slideshow */
+/* Background Slideshow - iPhone Optimizado */
 .background-slideshow {
     position: fixed;
     top: 0;
@@ -26,19 +39,20 @@ body {
     position: absolute;
     top: 50%;
     left: 50%;
-    width: 80%;
-    height: 80%;
-    object-fit: contain;
+    width: 90%;
+    height: 90%;
+    object-fit: cover;
     opacity: 0;
     transition: opacity 2s ease-in-out;
     transform: translate(-50%, -50%);
+    border-radius: 20px;
 }
 
 .bg-photo.active {
-    opacity: 0.4;
+    opacity: 0.3;
 }
 
-/* Floating Hearts */
+/* Floating Hearts - iPhone Optimizado */
 .hearts-container {
     position: fixed;
     top: 0;
@@ -47,36 +61,72 @@ body {
     height: 100%;
     pointer-events: none;
     z-index: -1;
+    overflow: hidden;
 }
 
 .heart {
     position: absolute;
-    font-size: 20px;
-    animation: float 6s ease-in-out infinite;
+    font-size: 14px;
+    animation: float-iphone 10s ease-in-out infinite;
     opacity: 0.7;
+    will-change: transform, opacity;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
 }
 
-.heart:nth-child(1) { left: 10%; animation-delay: 0s; }
-.heart:nth-child(2) { left: 20%; animation-delay: 1s; }
-.heart:nth-child(3) { left: 30%; animation-delay: 2s; }
-.heart:nth-child(4) { left: 40%; animation-delay: 3s; }
-.heart:nth-child(5) { left: 50%; animation-delay: 4s; }
-.heart:nth-child(6) { left: 60%; animation-delay: 5s; }
-.heart:nth-child(7) { left: 70%; animation-delay: 1.5s; }
-.heart:nth-child(8) { left: 80%; animation-delay: 2.5s; }
+.heart:nth-child(1) { left: 10%; animation-delay: 0s; animation-duration: 9s; }
+.heart:nth-child(2) { left: 20%; animation-delay: 1.2s; animation-duration: 11s; }
+.heart:nth-child(3) { left: 30%; animation-delay: 2.4s; animation-duration: 8.5s; }
+.heart:nth-child(4) { left: 40%; animation-delay: 3.6s; animation-duration: 10.5s; }
+.heart:nth-child(5) { left: 50%; animation-delay: 4.8s; animation-duration: 9.5s; }
+.heart:nth-child(6) { left: 60%; animation-delay: 6s; animation-duration: 11.5s; }
+.heart:nth-child(7) { left: 70%; animation-delay: 7.2s; animation-duration: 8s; }
+.heart:nth-child(8) { left: 80%; animation-delay: 8.4s; animation-duration: 10s; }
 
-@keyframes float {
-    0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
-    10% { opacity: 0.7; }
-    90% { opacity: 0.7; }
-    100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
+@keyframes float-iphone {
+    0% { 
+        transform: translateY(100vh) rotate(0deg) scale(0.8); 
+        opacity: 0; 
+    }
+    5% { 
+        opacity: 0.7; 
+    }
+    95% { 
+        opacity: 0.7; 
+    }
+    100% { 
+        transform: translateY(-100px) rotate(360deg) scale(1.2); 
+        opacity: 0; 
+    }
 }
 
-/* Navigation Menu */
+/* Animación optimizada para iPhone con batería */
+@media (prefers-reduced-motion: reduce) {
+    .heart {
+        animation: none;
+    }
+}
+
+/* Mejoras de rendimiento para iPhone */
+.hearts-container {
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+    -webkit-perspective: 1000px;
+    perspective: 1000px;
+}
+
+.heart {
+    -webkit-transform-style: preserve-3d;
+    transform-style: preserve-3d;
+}
+
+/* Navigation Menu - iPhone Optimizado */
 .menu {
     position: fixed;
-    top: 20px;
-    right: 20px;
+    top: var(--safe-area-top);
+    right: 15px;
     z-index: 1000;
 }
 
@@ -84,32 +134,36 @@ body {
     cursor: pointer;
     display: flex;
     flex-direction: column;
-    gap: 4px;
-    padding: 10px;
-    background: rgba(255, 255, 255, 0.2);
-    border-radius: 10px;
-    backdrop-filter: blur(10px);
+    gap: 3px;
+    padding: 12px;
+    background: rgba(255, 255, 255, 0.25);
+    border-radius: 12px;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
 }
 
 .menu-toggle span {
-    width: 25px;
-    height: 3px;
+    width: 20px;
+    height: 2px;
     background: white;
     transition: 0.3s;
+    border-radius: 1px;
 }
 
 .menu-items {
     position: absolute;
-    top: 50px;
+    top: 55px;
     right: 0;
-    background: rgba(255, 255, 255, 0.9);
+    background: rgba(255, 255, 255, 0.95);
     border-radius: 15px;
-    padding: 20px;
+    padding: 15px;
     list-style: none;
     transform: scale(0);
     transform-origin: top right;
     transition: 0.3s;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+    min-width: 150px;
 }
 
 .menu-items.active {
@@ -117,17 +171,19 @@ body {
 }
 
 .menu-items li {
-    margin: 10px 0;
+    margin: 8px 0;
 }
 
 .menu-items a {
     color: #ff6b6b;
     text-decoration: none;
     font-weight: 600;
-    padding: 8px 15px;
-    border-radius: 20px;
+    font-size: 16px;
+    padding: 10px 12px;
+    border-radius: 12px;
     transition: 0.3s;
     display: block;
+    -webkit-tap-highlight-color: rgba(255, 107, 107, 0.1);
 }
 
 .menu-items a:hover, .menu-items a.active {
@@ -135,16 +191,16 @@ body {
     color: white;
 }
 
-/* Main Content */
+/* Main Content - iPhone Optimizado */
 main {
-    padding: 80px 20px 20px;
-    max-width: 1200px;
+    padding: 80px 15px 15px;
+    max-width: 100%;
     margin: 0 auto;
 }
 
 .section {
     display: none;
-    animation: fadeIn 0.5s ease-in-out;
+    animation: fadeIn 0.4s ease-in-out;
 }
 
 .section.active {
@@ -152,101 +208,110 @@ main {
 }
 
 @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(20px); }
+    from { opacity: 0; transform: translateY(15px); }
     to { opacity: 1; transform: translateY(0); }
 }
 
 .content {
-    background: rgba(255, 255, 255, 0.9);
+    background: rgba(255, 255, 255, 0.92);
     border-radius: 20px;
-    padding: 40px;
+    padding: 25px 20px;
     text-align: center;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-    backdrop-filter: blur(10px);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    margin: 0 10px;
 }
 
 h1, h2 {
-    font-family: 'Dancing Script', cursive;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
     color: #ff6b6b;
-    margin-bottom: 20px;
+    margin-bottom: 15px;
+    font-weight: 700;
 }
 
 h1 {
-    font-size: 3em;
+    font-size: 2.2em;
+    line-height: 1.2;
 }
 
 h2 {
-    font-size: 2.5em;
+    font-size: 1.8em;
+    line-height: 1.3;
 }
 
 .subtitle {
-    font-size: 1.2em;
+    font-size: 1.1em;
     color: #666;
-    margin-bottom: 30px;
+    margin-bottom: 20px;
+    line-height: 1.4;
 }
 
-/* Photo Frame */
+/* Photo Frame - iPhone */
 .photo-frame {
-    margin: 30px auto;
-    max-width: 400px;
+    margin: 20px auto;
+    max-width: 100%;
+    padding: 0 10px;
 }
 
 .main-photo {
     width: 100%;
-    height: 300px;
+    max-width: 300px;
+    height: 200px;
     object-fit: cover;
-    border-radius: 20px;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
     transition: transform 0.3s;
 }
 
 .main-photo:hover {
-    transform: scale(1.05);
+    transform: scale(1.02);
 }
 
 .love-message {
-    font-size: 1.3em;
+    font-size: 1.1em;
     font-style: italic;
     color: #ff6b6b;
-    margin: 30px 0;
+    margin: 20px 0;
+    line-height: 1.5;
 }
 
-/* Music Player */
+/* Music Player - iPhone Optimizado */
 .music-player {
-    max-width: 800px;
-    margin: 30px auto;
+    max-width: 100%;
+    margin: 20px auto;
+    padding: 0 10px;
 }
 
 .song-list {
     display: flex;
     flex-direction: column;
-    gap: 25px;
+    gap: 15px;
 }
 
 .song {
     display: flex;
     align-items: center;
-    background: rgba(255, 255, 255, 0.15);
-    padding: 20px;
-    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.2);
+    padding: 15px;
+    border-radius: 15px;
     backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
     transition: all 0.3s ease;
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.3);
 }
 
-.song:hover {
-    transform: translateY(-5px);
-    background: rgba(255, 255, 255, 0.25);
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+.song:active {
+    transform: scale(0.98);
 }
 
 .song img {
-    width: 80px;
-    height: 80px;
-    border-radius: 15px;
+    width: 60px;
+    height: 60px;
+    border-radius: 12px;
     object-fit: cover;
-    margin-right: 20px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    margin-right: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 .song-info {
@@ -256,17 +321,16 @@ h2 {
 
 .song-info h3 {
     color: #333;
-    margin-bottom: 8px;
-    font-size: 1.2em;
+    margin-bottom: 4px;
+    font-size: 1em;
     font-weight: 600;
-    text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8);
+    line-height: 1.2;
 }
 
 .song-info p {
     color: #555;
-    font-size: 1em;
+    font-size: 0.9em;
     font-weight: 500;
-    text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8);
 }
 
 .play-btn {
@@ -274,75 +338,73 @@ h2 {
     color: white;
     border: none;
     border-radius: 50%;
-    width: 50px;
-    height: 50px;
+    width: 45px;
+    height: 45px;
     cursor: pointer;
-    font-size: 1.2em;
+    font-size: 1.1em;
     transition: all 0.3s ease;
-    box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);
-}
-
-.play-btn:hover {
-    background: linear-gradient(45deg, #ff5252, #ff7575);
-    transform: scale(1.1);
-    box-shadow: 0 6px 20px rgba(255, 107, 107, 0.4);
+    box-shadow: 0 3px 10px rgba(255, 107, 107, 0.3);
+    -webkit-tap-highlight-color: transparent;
 }
 
 .play-btn:active {
-    transform: scale(0.95);
+    transform: scale(0.9);
+    background: linear-gradient(45deg, #ff5252, #ff7575);
 }
 
-/* YouTube Embeds */
+/* YouTube Embeds - iPhone */
 .youtube-embeds {
-    margin-top: 30px;
+    margin-top: 20px;
 }
 
 .youtube-embeds > div {
-    margin: 20px 0;
-    border-radius: 15px;
+    margin: 15px 0;
+    border-radius: 12px;
     overflow: hidden;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
 }
 
 .youtube-embeds iframe {
-    border-radius: 15px;
+    border-radius: 12px;
+    width: 100%;
+    height: 200px;
 }
 
-/* Audio Player */
+/* Audio Player - iPhone */
 .audio-player {
-    margin-top: 20px;
+    margin-top: 15px;
 }
 
 .audio-player audio {
     width: 100%;
-    border-radius: 10px;
+    border-radius: 8px;
     background: rgba(255, 255, 255, 0.1);
 }
 
-/* Gallery */
+/* Gallery - iPhone Optimizado */
 .gallery-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 20px;
-    margin: 30px 0;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    margin: 20px 0;
+    padding: 0 10px;
 }
 
 .photo-item {
     position: relative;
-    border-radius: 15px;
+    border-radius: 12px;
     overflow: hidden;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
     transition: 0.3s;
 }
 
-.photo-item:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+.photo-item:active {
+    transform: scale(0.98);
 }
 
 .photo-item img {
     width: 100%;
-    height: 200px;
+    height: 150px;
     object-fit: cover;
 }
 
@@ -353,42 +415,132 @@ h2 {
     right: 0;
     background: linear-gradient(transparent, rgba(0, 0, 0, 0.7));
     color: white;
-    padding: 20px 10px 10px;
-    font-size: 0.9em;
+    padding: 15px 8px 8px;
+    font-size: 0.85em;
+    text-align: center;
 }
 
-/* Love Letter */
+/* Love Letter - iPhone */
 .love-letter {
-    max-width: 600px;
+    max-width: 100%;
     margin: 0 auto;
     text-align: left;
-    line-height: 1.8;
+    line-height: 1.6;
     color: #333;
+    padding: 0 10px;
 }
 
 .love-letter p {
-    margin-bottom: 20px;
-    font-size: 1.1em;
+    margin-bottom: 15px;
+    font-size: 1em;
 }
 
 .signature {
     text-align: right;
-    font-family: 'Dancing Script', cursive;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+    font-size: 1.2em;
+    color: #ff6b6b;
+    font-weight: 600;
+}
+
+/* Calendar - iPhone */
+.calendar-container {
+    max-width: 100%;
+    margin: 0 auto;
+    padding: 0 10px;
+}
+
+.calendar-header {
+    margin-bottom: 20px;
+}
+
+.calendar-header h3 {
     font-size: 1.3em;
+    margin-bottom: 8px;
+}
+
+.days-count {
+    font-size: 1em;
+}
+
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 4px;
+    margin: 15px 0;
+}
+
+.calendar-day {
+    aspect-ratio: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 8px;
+    font-size: 0.8em;
+    font-weight: 600;
+}
+
+.calendar-day.special {
+    background: rgba(255, 107, 107, 0.3);
     color: #ff6b6b;
 }
 
-/* Responsive */
-@media (max-width: 768px) {
-    h1 { font-size: 2.5em; }
-    h2 { font-size: 2em; }
+/* Media Queries específicas para iPhone */
+@media screen and (max-width: 375px) {
+    /* iPhone SE, 8, etc. */
+    h1 { font-size: 2em; }
+    h2 { font-size: 1.6em; }
     
     .content {
-        padding: 30px 20px;
-        margin: 10px;
+        padding: 20px 15px;
+        margin: 0 5px;
     }
     
     .gallery-grid {
         grid-template-columns: 1fr;
+    }
+    
+    .youtube-embeds iframe {
+        height: 180px;
+    }
+}
+
+@media screen and (min-width: 376px) and (max-width: 414px) {
+    /* iPhone 11, 12, 13, etc. */
+    h1 { font-size: 2.1em; }
+    h2 { font-size: 1.7em; }
+}
+
+@media screen and (min-width: 415px) and (max-width: 430px) {
+    /* iPhone 14 Pro, 15 Pro, etc. */
+    h1 { font-size: 2.2em; }
+    h2 { font-size: 1.8em; }
+}
+
+/* Optimización para modo oscuro de iPhone */
+@media (prefers-color-scheme: dark) {
+    body {
+        background: linear-gradient(135deg, #8B0000, #A52A2A, #CD5C5C);
+    }
+    
+    .content {
+        background: rgba(40, 40, 40, 0.9);
+        color: white;
+    }
+    
+    .song-info h3 {
+        color: #f0f0f0;
+    }
+    
+    .song-info p {
+        color: #d0d0d0;
+    }
+}
+
+/* Prevenir zoom en doble tap */
+@media screen and (-webkit-min-device-pixel-ratio: 2) {
+    body {
+        -webkit-text-size-adjust: 100%;
     }
 }
