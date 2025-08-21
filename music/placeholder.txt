@@ -1,0 +1,10 @@
+# Carpeta para música
+
+Coloca aquí tus archivos de música:
+
+- our-song.mp3 (canción principal)
+- song1.mp3
+- song2.mp3
+- song3.mp3
+
+Formatos soportados: MP3, WAV, OGG
